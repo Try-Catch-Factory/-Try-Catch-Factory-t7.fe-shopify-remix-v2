@@ -1,4 +1,4 @@
-import {Await, NavLink} from '@remix-run/react';
+import {Await, NavLink, Link} from '@remix-run/react';
 import {Suspense} from 'react';
 import type {HeaderQuery} from 'storefrontapi.generated';
 import type {LayoutProps} from './Layout';
@@ -15,11 +15,9 @@ export function Header({header, isLoggedIn, cart}: HeaderProps) {
       <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
         <strong>{shop.name}</strong>
       </NavLink>
-      <HeaderMenu
-        menu={menu}
-        viewport="desktop"
-        primaryDomainUrl={header.shop.primaryDomain.url}
-      />
+      <div className='blogLink'><Link to={`/`}> Home</Link></div>
+      <div className='blogLink'><Link to={`/collections`}> Catalog</Link></div>
+      <div className='blogLink'><Link to={`/blogs/news`}> Noticias</Link></div>
       <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
     </header>
   );
