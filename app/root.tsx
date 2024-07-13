@@ -21,6 +21,7 @@ import type {CustomerAccessToken} from '@shopify/hydrogen/storefront-api-types';
 import favicon from '../public/favicon.svg';
 import resetStyles from './styles/reset.css';
 import appStyles from './styles/app.css';
+import stylesheet from "./tailwind.css?url";
 import {Layout} from '~/components/Layout';
 
 /**
@@ -46,6 +47,7 @@ export const shouldRevalidate: ShouldRevalidateFunction = ({
 
 export function links() {
   return [
+    {rel: "stylesheet", href: stylesheet},
     {rel: 'stylesheet', href: resetStyles},
     {rel: 'stylesheet', href: appStyles},
     {
