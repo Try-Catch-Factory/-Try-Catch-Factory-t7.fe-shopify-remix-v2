@@ -7,6 +7,10 @@ import type {
   RecommendedProductsQuery,
 } from 'storefrontapi.generated';
 
+import { Hero, Product } from '~/components/index';
+import Button from '~/components/Button';
+
+
 export const meta: MetaFunction = () => {
   return [{title: 'Hydrogen | Home'}];
 };
@@ -22,9 +26,10 @@ export async function loader({context}: LoaderFunctionArgs) {
 
 export default function Homepage() {
   const data = useLoaderData<typeof loader>();
+  console.log(data);
   return (
     <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
+      <Hero/>
       <RecommendedProducts products={data.recommendedProducts} />
     </div>
   );
@@ -58,35 +63,37 @@ function RecommendedProducts({
   products: Promise<RecommendedProductsQuery>;
 }) {
   return (
-    <div className="recommended-products">
-      <h2>Recommended Products</h2>
-      <Suspense fallback={<div>Loading...</div>}>
-        <Await resolve={products}>
-          {({products}) => (
-            <div className="recommended-products-grid">
-              {products.nodes.map((product) => (
-                <Link
-                  key={product.id}
-                  className="recommended-product"
-                  to={`/products/${product.handle}`}
-                >
-                  <Image
-                    data={product.images.nodes[0]}
-                    aspectRatio="1/1"
-                    sizes="(min-width: 45em) 20vw, 50vw"
-                  />
-                  <h4>{product.title}</h4>
-                  <small>
-                    <Money data={product.priceRange.minVariantPrice} />
-                  </small>
-                </Link>
-              ))}
-            </div>
-          )}
-        </Await>
-      </Suspense>
-      <br />
+    <div className='flex flex-col items-center p-11'>
+      <div className="md:w-[80%] flex flex-wrap w-[90%]">
+        <h2 className='py-2'>Featured Components</h2>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Await resolve={products}>
+            {({products}) => (
+              <div className="recommended-products-grid">
+                {products.nodes.map((product) => (
+                  <Link
+                    key={product.id}
+                    className="recommended-product"
+                    to={`/products/${product.handle}`}
+                  >
+                    <Product data={product}/>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </Await>
+        </Suspense>
+        <br />
+      </div>
+      <div className='text-center'>
+        <Link to={"/collections/"}>
+          <Button color='secondary' style='filled' key={2} className="px-8">
+            View all
+          </Button>
+        </Link>
+      </div>
     </div>
+    
   );
 }
 
@@ -136,7 +143,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
     @inContext(country: $country, language: $language) {
-    products(first: 4, sortKey: UPDATED_AT, reverse: true) {
+    products(first: 8, sortKey: UPDATED_AT, reverse: true) {
       nodes {
         ...RecommendedProduct
       }
