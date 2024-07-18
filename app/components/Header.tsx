@@ -3,6 +3,10 @@ import {Suspense} from 'react';
 import type {HeaderQuery} from 'storefrontapi.generated';
 import type {LayoutProps} from './Layout';
 import {useRootLoaderData} from '~/root';
+import { Navbar } from './Navbar';
+import {
+  CartIcon
+} from '@shopify/polaris-icons'
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
@@ -11,17 +15,35 @@ type Viewport = 'desktop' | 'mobile';
 export function Header({header, isLoggedIn, cart}: HeaderProps) {
   const {shop, menu} = header;
   return (
-    <header className="header">
-      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-        <strong>{shop.name}</strong>
-      </NavLink>
-      <div className='blogLink'><Link to={`/`}> Home</Link></div>
-      <div className='blogLink'><Link to={`/collections`}> Catalog</Link></div>
-      <div className='blogLink'><Link to={`/blogs/news`}> Noticias</Link></div>
-      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
-    </header>
+    <>
+      <div className='w-[100%] text-center'>
+          <p className='p-[10px] text-[13px] tracking-widest'>
+            Welcome to our store
+          </p>
+      </div>
+      <div className='w-[100%] border'></div>
+      <header className="flex flex-col items-center px-[50px] py-[20px]">
+        
+        <div className='h-fit max-w-[60rem]'>
+          <Navbar shop={shop} activeLinkStyle={activeLinkStyle}>
+            <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+          </Navbar>
+        </div>
+      
+      </header>
+    </>
+    
   );
 }
+/*
+<NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+          <strong>{shop.name}</strong>
+        </NavLink>
+        <div className='blogLink'><Link to={`/`}> Home</Link></div>
+        <div className='blogLink'><Link to={`/collections`}> Catalog</Link></div>
+        <div className='blogLink'><Link to={`/blogs/news`}> Noticias</Link></div>
+        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+*/
 
 export function HeaderMenu({
   menu,
@@ -88,13 +110,15 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-        {isLoggedIn ? 'Account' : 'Sign in'}
-      </NavLink>
-      <SearchToggle />
+    <nav className="header-ctas text-[14px]" role="navigation">
+      <div className="lg:flex lg:gap-[5px] hidden">
+        <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
+          {isLoggedIn ? 'Account' : 'Sign in'}
+        </NavLink>
+        <SearchToggle />
+      </div>
       <CartToggle cart={cart} />
+      <HeaderMenuMobileToggle />
     </nav>
   );
 }
@@ -112,7 +136,7 @@ function SearchToggle() {
 }
 
 function CartBadge({count}: {count: number}) {
-  return <a href="#cart-aside">Cart {count}</a>;
+  return <a href="#cart-aside"> <CartIcon width={20} className='inline'/> <span className='inline'>{count}</span></a>;
 }
 
 function CartToggle({cart}: Pick<HeaderProps, 'cart'>) {
@@ -178,7 +202,7 @@ function activeLinkStyle({
   isPending: boolean;
 }) {
   return {
-    fontWeight: isActive ? 'bold' : undefined,
+    textDecorationLine: isActive ? 'underline' : undefined,
     color: isPending ? 'grey' : 'black',
   };
 }

@@ -26,6 +26,7 @@ import type {
   SelectedOption,
 } from '@shopify/hydrogen/storefront-api-types';
 import {getVariantUrl} from '~/utils';
+import Button from '~/components/Button';
 
 export const meta: MetaFunction<typeof loader> = ({data}) => {
   return [{title: `Hydrogen | ${data?.product.title ?? ''}`}];
@@ -254,7 +255,10 @@ function ProductForm({
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        <Button style='filled' color='secondary' className="w-[400px]">
+          {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        </Button>
+        
       </AddToCartButton>
     </div>
   );
