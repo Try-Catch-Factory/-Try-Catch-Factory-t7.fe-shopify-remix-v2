@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap');
+
 :root {
   --aside-width: 400px;
   --cart-aside-summary-height-with-discount: 300px;
@@ -6,6 +8,12 @@
   --header-height: 64px;
   --color-dark: #000;
   --color-light: #fff;
+}
+
+body {
+  font-family: "Assistant", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
 }
 
 img {
@@ -321,10 +329,18 @@ aside li {
   object-fit: cover;
 }
 
+.recommended-products {
+  display: flex;
+  flex-flow: column;
+  gap: 10px;
+  width: 60rem;
+}
+
 .recommended-products-grid {
-  display: grid;
-  grid-gap: 1.5rem;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 20px;
   @media (min-width: 45em) {
     grid-template-columns: repeat(4, 1fr);
   }
