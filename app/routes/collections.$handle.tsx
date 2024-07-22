@@ -40,8 +40,8 @@ export default function Collection() {
   const {collection} = useLoaderData<typeof loader>();
 
   return (
-    <div className="collection">
-      <h1>{collection.title}</h1>
+    <div className="collections flex flex-col items-center">
+      <h1 className='w-1/2 text-4xl'>{collection.title}</h1>
       <p className="collection-description">{collection.description}</p>
       <Pagination connection={collection.products}>
         {({nodes, isLoading, PreviousLink, NextLink}) => (
@@ -63,7 +63,7 @@ export default function Collection() {
 
 function ProductsGrid({products}: {products: ProductItemFragment[]}) {
   return (
-    <div className="products-grid">
+    <div className="products-grid flex flex-col items-center p-11  w-2/3">
       {products.map((product, index) => {
         return (
           <ProductItem
@@ -88,7 +88,7 @@ function ProductItem({
   const variantUrl = useVariantUrl(product.handle, variant.selectedOptions);
   return (
     <Link
-      className="product-item"
+      className="product-item no-underline hover:no-underline"
       key={product.id}
       prefetch="intent"
       to={variantUrl}
@@ -102,7 +102,7 @@ function ProductItem({
           sizes="(min-width: 45em) 400px, 100vw"
         />
       )}
-      <h4>{product.title}</h4>
+      <h4 className='text-[13px] font-sans'>{product.title}</h4>
       <small>
         <Money data={product.priceRange.minVariantPrice} />
       </small>

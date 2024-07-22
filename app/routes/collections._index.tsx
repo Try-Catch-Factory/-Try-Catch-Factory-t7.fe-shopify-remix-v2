@@ -19,13 +19,13 @@ export default function Collections() {
   const { collections } = useLoaderData<typeof loader>();
 
   return (
-    <div className="collections ">
-     
-      <div className='flex flex-col justify-center items-center h-screen'>
+    
+      
+      <div className='flex flex-col justify-center items-center  mb-52 bg-orange-500'>
         
         <Pagination connection={collections}>
           {({ nodes, isLoading, PreviousLink, NextLink }) => (
-            <div className=' w-[1200px] '>
+            <div className=' w-[1200px] bg-red-600'>
               <PreviousLink>
                 {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
               </PreviousLink>
@@ -39,13 +39,15 @@ export default function Collections() {
 
       </div>
 
-    </div>
+    
   );
 }
 
 function CollectionsGrid({ collections }: { collections: CollectionFragment[] }) {
   return (
-    <div className="collections-grid m-2">
+    <>
+    <h1 className='mt-24 font-sans-serif text-4xl bg-green-500'>Collections</h1>
+    <div className="collections-grid m-2 bg-gray-600" >
       {collections.map((collection, index) => (
         <CollectionItem
           key={collection.id}
@@ -54,6 +56,7 @@ function CollectionsGrid({ collections }: { collections: CollectionFragment[] })
         />
       ))}
     </div>
+    </>
   );
 }
 
@@ -65,22 +68,22 @@ function CollectionItem({
   index: number;
 }) {
   return (
-    <div className='w-full '>
+    <div className='w-full transition-transform duration-300 hover:scale-110 bg-blue-900'>
       <Link
-        className="collection-item "
+        className="collection-item no-underline hover:no-underline "
         key={collection.id}
         to={`/collections/${collection.handle}`}
         prefetch="intent"
       >
         {collection?.image && (
-          <Image 
+          <Image
             alt={collection.image.altText || collection.title}
             aspectRatio="1/1"
             data={collection.image}
             loading={index < 3 ? 'eager' : undefined}
           />
         )}
-        <h5>{collection.title}</h5>
+        <h5 className=''>{collection.title} &#8594;</h5>
       </Link>
     </div>
 
