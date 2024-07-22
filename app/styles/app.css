@@ -363,19 +363,22 @@ aside li {
 }
 
 .collection-item {
+  
   height: auto;
 }
 .collection-img {
-  width: 100%;
+  width: 400px;
   overflow: hidden;
   margin: auto;
 }
 
 .collection-img img {
   transition: transform 0.3s ease;
+  
 }
 
 .collection-img img:hover {
+  width: 350px;
   transform: scale(1.2);
 }
 

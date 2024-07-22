@@ -80,7 +80,7 @@ function CollectionItem({
           <div className='collection-img '>
             <Image 
               alt={collection.image.altText || collection.title}
-              aspectRatio="1/1"
+              aspectRatio="10/8" 
               data={collection.image}
               loading={index < 3 ? 'eager' : undefined}
             />
