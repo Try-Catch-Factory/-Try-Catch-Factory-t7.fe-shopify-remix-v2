@@ -19,47 +19,48 @@ export default function Collections() {
   const { collections } = useLoaderData<typeof loader>();
 
   return (
-    
-      
-      <div className='flex flex-col justify-center items-center  mb-52 bg-orange-500'>
-        
-        <Pagination connection={collections}>
-          {({ nodes, isLoading, PreviousLink, NextLink }) => (
-            <div className=' w-[1200px] bg-red-600'>
-              <PreviousLink>
-                {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-              </PreviousLink>
-              <CollectionsGrid collections={nodes} />
-              <NextLink>
-                {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-              </NextLink>
-            </div>
-          )}
-        </Pagination>
+    <div className='flex flex-col  items-center  '>
+      <div className='max-w-[1200px] w-3/4 font-extra text-4xl mb-9'>Collections</div>
+      <Pagination connection={collections}>
+        {({ nodes, isLoading, PreviousLink, NextLink }) => (
+          <div className=''>
+            <PreviousLink>
+              {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+            </PreviousLink>
 
-      </div>
+            <CollectionsGrid collections={nodes} />
+            <NextLink>
+              {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+            </NextLink>
 
-    
+          </div>
+        )}
+      </Pagination>
+
+    </div>
+
   );
 }
 
 function CollectionsGrid({ collections }: { collections: CollectionFragment[] }) {
   return (
     <>
-    <h1 className='mt-24 font-sans-serif text-4xl bg-green-500'>Collections</h1>
-    <div className="collections-grid m-2 bg-gray-600" >
-      {collections.map((collection, index) => (
-        <CollectionItem
-          key={collection.id}
-          collection={collection}
-          index={index}
-        />
-      ))}
-    </div>
+
+      <div className="flex flex-row flex-wrap space-x-2 justify-center max-w-[1200px]" >
+        
+        {collections.map((collection, index) => (
+          <CollectionItem
+            key={collection.id}
+            collection={collection}
+            index={index}
+          />
+        ))}
+      </div>
     </>
   );
 }
 
+//-----------------------------
 function CollectionItem({
   collection,
   index,
@@ -68,7 +69,7 @@ function CollectionItem({
   index: number;
 }) {
   return (
-    <div className='w-full transition-transform duration-300 hover:scale-110 bg-blue-900'>
+    <div className='w-[350px] ml-5 mr-5 '>
       <Link
         className="collection-item no-underline hover:no-underline "
         key={collection.id}
