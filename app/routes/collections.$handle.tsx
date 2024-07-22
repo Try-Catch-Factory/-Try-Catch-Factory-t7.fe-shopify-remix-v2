@@ -94,7 +94,7 @@ function ProductItem({
       to={variantUrl}
     >
       {product.featuredImage && (
-        <Image
+        <Image    className='product-img'
           alt={product.featuredImage.altText || product.title}
           aspectRatio="1/1"
           data={product.featuredImage}

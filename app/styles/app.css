@@ -11,7 +11,7 @@
 }
 
 body {
-  font-family: "Assistant", sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
 }
@@ -362,8 +362,21 @@ aside li {
   margin-bottom: 2rem;
 }
 
-.collection-item img {
+.collection-item {
   height: auto;
+}
+.collection-img {
+  width: 100%;
+  overflow: hidden;
+  margin: auto;
+}
+
+.collection-img img {
+  transition: transform 0.3s ease;
+}
+
+.collection-img img:hover {
+  transform: scale(1.2);
 }
 
 /*
@@ -488,14 +501,14 @@ aside li {
   display: inline-block;
 }
 
-.blogLink{
+.blogLink {
   margin-left: 10px;
 }
-.blog-article{
+.blog-article {
   max-width: 400px;
   margin: 100px;
 }
-.article{
+.article {
   max-width: 100%;
   margin: 100px;
 }

@@ -47,7 +47,7 @@ function CollectionsGrid({ collections }: { collections: CollectionFragment[] })
     <>
 
       <div className="flex flex-row flex-wrap space-x-2 justify-center max-w-[1200px]" >
-        
+
         {collections.map((collection, index) => (
           <CollectionItem
             key={collection.id}
@@ -69,7 +69,7 @@ function CollectionItem({
   index: number;
 }) {
   return (
-    <div className='w-[350px] ml-5 mr-5 '>
+    <div className=''>
       <Link
         className="collection-item no-underline hover:no-underline "
         key={collection.id}
@@ -77,12 +77,15 @@ function CollectionItem({
         prefetch="intent"
       >
         {collection?.image && (
-          <Image
-            alt={collection.image.altText || collection.title}
-            aspectRatio="1/1"
-            data={collection.image}
-            loading={index < 3 ? 'eager' : undefined}
-          />
+          <div className='collection-img '>
+            <Image 
+              alt={collection.image.altText || collection.title}
+              aspectRatio="1/1"
+              data={collection.image}
+              loading={index < 3 ? 'eager' : undefined}
+            />
+          </div>
+
         )}
         <h5 className=''>{collection.title} &#8594;</h5>
       </Link>
