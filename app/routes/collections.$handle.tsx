@@ -40,9 +40,9 @@ export default function Collection() {
   const { collection } = useLoaderData<typeof loader>();
 
   return (
-    <div className=" flex flex-col items-center ">
-      <h1 className='w-1/2 text-4xl font-extra'>{collection.title}</h1>
-      <p className="collection-description font-extra text-2xl">{collection.description}</p>
+    <div className=" flex flex-col items-center  ">
+      <h1 className=' text-4xl font-extra '>{collection.title}</h1>
+      <p className="collection-description font-extra text-2xl ">{collection.description}</p>
       <Pagination connection={collection.products}>
         {({ nodes, isLoading, PreviousLink, NextLink }) => (
           <>
