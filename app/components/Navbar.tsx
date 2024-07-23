@@ -32,7 +32,7 @@ export function Navbar({shop, activeLinkStyle, ...props}: NavbarProps) {
            <nav className="lg:block hidden">
                 <ul className="w-full h-full flex flex-row flex-wrap items-center">
                     <li className='blogLink'><Link className="p-3 text-[14px]" to={`/`}> Home</Link></li>
-                    <li className='blogLink'><Link className="p-3 text-[14px]" to={`/collections`}> Catalog</Link></li>
+                    <li className='blogLink'><Link className="p-3 text-[14px]" to={`/collections`}> Collections</Link></li>
                 </ul>
            </nav>
            <div>
