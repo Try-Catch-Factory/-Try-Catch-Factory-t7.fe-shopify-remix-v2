@@ -56,7 +56,7 @@ export function HeaderMenu({
           style={activeLinkStyle}
           to="/"
         >
-          Home
+          {/** Home */}
         </NavLink>
       )}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
@@ -83,6 +83,21 @@ export function HeaderMenu({
           </NavLink>
         );
       })}
+      
+      {viewport === 'mobile' && (
+        <NavLink
+          end
+          onClick={closeAside}
+          prefetch="intent"
+          style={activeLinkStyle}
+          to="/blogs/news"
+        >
+          News
+        </NavLink>
+      )}
+        
+      
+    
     </nav>
   );
 }
@@ -96,7 +111,7 @@ function HeaderCtas({
       <HeaderMenuMobileToggle />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         {isLoggedIn ? 'Account' : 'Sign in'}
-      </NavLink>
+      </NavLink >
       <SearchToggle />
       <CartToggle cart={cart} />
     </nav>

@@ -179,6 +179,7 @@ aside li {
 .header-ctas {
   align-items: center;
   display: flex;
+  flex-direction: row;
   grid-gap: 1rem;
   margin-left: auto;
 }
