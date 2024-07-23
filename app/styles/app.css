@@ -150,12 +150,16 @@ aside li {
   @media (min-width: 48em) {
     display: none;
   }
+  
 }
 
 .header-menu-mobile {
   display: flex;
   flex-direction: column;
   grid-gap: 1rem;
+  padding-left: 30px;
+  
+
 }
 
 .header-menu-desktop {
@@ -452,6 +456,10 @@ aside li {
     grid-template-columns: 1fr 1fr;
     grid-gap: 4rem;
   }
+  align-self: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  
 }
 
 .product h1 {
@@ -461,6 +469,8 @@ aside li {
 .product-images {
   display: grid;
   grid-gap: 1rem;
+  
+
 }
 
 .product-image img {
@@ -548,4 +558,19 @@ aside li {
 .article {
   max-width: 100%;
   margin: 100px;
+}
+
+/*---- hiden menu ------*/
+#myMenu {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  #myMenu {
+      display: none;
+
+  }
 }
