@@ -1,21 +1,21 @@
-import {json, redirect, type LoaderFunctionArgs} from '@netlify/remix-runtime';
-import {useLoaderData, Link, type MetaFunction} from '@remix-run/react';
+import { json, redirect, type LoaderFunctionArgs } from '@netlify/remix-runtime';
+import { useLoaderData, Link, type MetaFunction } from '@remix-run/react';
 import {
   Pagination,
   getPaginationVariables,
   Image,
   Money,
 } from '@shopify/hydrogen';
-import type {ProductItemFragment} from 'storefrontapi.generated';
-import {useVariantUrl} from '~/utils';
+import type { ProductItemFragment } from 'storefrontapi.generated';
+import { useVariantUrl } from '~/utils';
 
-export const meta: MetaFunction<typeof loader> = ({data}) => {
-  return [{title: `Hydrogen | ${data?.collection.title ?? ''} Collection`}];
+export const meta: MetaFunction<typeof loader> = ({ data }) => {
+  return [{ title: `Hydrogen | ${data?.collection.title ?? ''} Collection` }];
 };
 
-export async function loader({request, params, context}: LoaderFunctionArgs) {
-  const {handle} = params;
-  const {storefront} = context;
+export async function loader({ request, params, context }: LoaderFunctionArgs) {
+  const { handle } = params;
+  const { storefront } = context;
   const paginationVariables = getPaginationVariables(request, {
     pageBy: 8,
   });
@@ -24,8 +24,8 @@ export async function loader({request, params, context}: LoaderFunctionArgs) {
     return redirect('/collections');
   }
 
-  const {collection} = await storefront.query(COLLECTION_QUERY, {
-    variables: {handle, ...paginationVariables},
+  const { collection } = await storefront.query(COLLECTION_QUERY, {
+    variables: { handle, ...paginationVariables },
   });
 
   if (!collection) {
@@ -33,18 +33,18 @@ export async function loader({request, params, context}: LoaderFunctionArgs) {
       status: 404,
     });
   }
-  return json({collection});
+  return json({ collection });
 }
 
 export default function Collection() {
-  const {collection} = useLoaderData<typeof loader>();
+  const { collection } = useLoaderData<typeof loader>();
 
   return (
     <div className=" flex flex-col items-center ">
       <h1 className='w-1/2 text-4xl font-extra'>{collection.title}</h1>
-      <p className="collection-description">{collection.description}</p>
+      <p className="collection-description font-extra text-2xl">{collection.description}</p>
       <Pagination connection={collection.products}>
-        {({nodes, isLoading, PreviousLink, NextLink}) => (
+        {({ nodes, isLoading, PreviousLink, NextLink }) => (
           <>
             <PreviousLink>
               {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
@@ -61,7 +61,7 @@ export default function Collection() {
   );
 }
 
-function ProductsGrid({products}: {products: ProductItemFragment[]}) {
+function ProductsGrid({ products }: { products: ProductItemFragment[] }) {
   return (
     <div className="products-grid flex flex-col items-center  w-2/3 ">
       {products.map((product, index) => {
@@ -94,13 +94,16 @@ function ProductItem({
       to={variantUrl}
     >
       {product.featuredImage && (
-        <Image    className='product-img'
-          alt={product.featuredImage.altText || product.title}
-          aspectRatio="1/1"
-          data={product.featuredImage}
-          loading={loading}
-          sizes="(min-width: 45em) 400px, 100vw"
-        />
+        <div className='product-img'>
+          <Image 
+            alt={product.featuredImage.altText || product.title}
+            aspectRatio="1/1"
+            data={product.featuredImage}
+            loading={loading}
+            sizes="(min-width: 45em) 400px, 100vw"
+          />
+        </div>
+
       )}
       <h4 className='text-[15px] font-extra'>{product.title}</h4>
       <small>
