@@ -1,49 +1,30 @@
-import {Await, NavLink, Link} from '@remix-run/react';
-import {Suspense} from 'react';
-import type {HeaderQuery} from 'storefrontapi.generated';
-import type {LayoutProps} from './Layout';
-import {useRootLoaderData} from '~/root';
-import { Navbar } from './Navbar';
-import {
-  CartIcon
-} from '@shopify/polaris-icons'
+import { Await, NavLink, Link } from '@remix-run/react';
+import { Suspense } from 'react';
+import type { HeaderQuery } from 'storefrontapi.generated';
+import type { LayoutProps } from './Layout';
+import { useRootLoaderData } from '~/root';
 
 type HeaderProps = Pick<LayoutProps, 'header' | 'cart' | 'isLoggedIn'>;
 
 type Viewport = 'desktop' | 'mobile';
 
-export function Header({header, isLoggedIn, cart}: HeaderProps) {
-  const {shop, menu} = header;
+export function Header({ header, isLoggedIn, cart }: HeaderProps) {
+  const { shop, menu } = header;
   return (
-    <>
-      <div className='w-[100%] text-center'>
-          <p className='p-[10px] text-[13px] tracking-widest'>
-            Welcome to our store
-          </p>
+    <header className="header">
+      <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
+        <strong>{shop.name}</strong>
+      </NavLink>
+      <div id='myMenu'>
+        <div className='blogLink'><Link to={`/`}> Home</Link></div>
+        <div className='blogLink'><Link to={`/blogs/news`}> News</Link></div>
+        <div className='blogLink'><Link to={`/collections`}> Collections</Link></div>
       </div>
-      <div className='w-[100%] border'></div>
-      <header className="flex flex-col items-center px-[50px] py-[20px]">
-        
-        <div className='h-fit max-w-[60rem]'>
-          <Navbar shop={shop} activeLinkStyle={activeLinkStyle}>
-            <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
-          </Navbar>
-        </div>
-      
-      </header>
-    </>
-    
+
+      <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+    </header>
   );
 }
-/*
-<NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-          <strong>{shop.name}</strong>
-        </NavLink>
-        <div className='blogLink'><Link to={`/`}> Home</Link></div>
-        <div className='blogLink'><Link to={`/collections`}> Catalog</Link></div>
-        <div className='blogLink'><Link to={`/blogs/news`}> Noticias</Link></div>
-        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
-*/
 
 export function HeaderMenu({
   menu,
@@ -54,8 +35,8 @@ export function HeaderMenu({
   primaryDomainUrl: HeaderQuery['shop']['primaryDomain']['url'];
   viewport: Viewport;
 }) {
-  const {publicStoreDomain} = useRootLoaderData();
-  const className = `header-menu-${viewport}`;
+  const { publicStoreDomain } = useRootLoaderData();
+  const className = `header-menu-${viewport} `;
 
   function closeAside(event: React.MouseEvent<HTMLAnchorElement>) {
     if (viewport === 'mobile') {
@@ -65,7 +46,8 @@ export function HeaderMenu({
   }
 
   return (
-    <nav className={className} role="navigation">
+    <nav 
+      className={className} role="navigation">
       {viewport === 'mobile' && (
         <NavLink
           end
@@ -74,7 +56,7 @@ export function HeaderMenu({
           style={activeLinkStyle}
           to="/"
         >
-          Home
+          {/** Home */}
         </NavLink>
       )}
       {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
@@ -83,8 +65,8 @@ export function HeaderMenu({
         // if the url is internal, we strip the domain
         const url =
           item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
+            item.url.includes(publicStoreDomain) ||
+            item.url.includes(primaryDomainUrl)
             ? new URL(item.url).pathname
             : item.url;
         return (
@@ -101,6 +83,21 @@ export function HeaderMenu({
           </NavLink>
         );
       })}
+      
+      {viewport === 'mobile' && (
+        <NavLink
+          end
+          onClick={closeAside}
+          prefetch="intent"
+          style={activeLinkStyle}
+          to="/blogs/news"
+        >
+          News
+        </NavLink>
+      )}
+        
+      
+    
     </nav>
   );
 }
@@ -110,15 +107,13 @@ function HeaderCtas({
   cart,
 }: Pick<HeaderProps, 'isLoggedIn' | 'cart'>) {
   return (
-    <nav className="header-ctas text-[14px]" role="navigation">
-      <div className="lg:flex lg:gap-[5px] hidden">
-        <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
-          {isLoggedIn ? 'Account' : 'Sign in'}
-        </NavLink>
-        <SearchToggle />
-      </div>
-      <CartToggle cart={cart} />
+    <nav className="header-ctas" role="navigation">
       <HeaderMenuMobileToggle />
+      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
+        {isLoggedIn ? 'Account' : 'Sign in'}
+      </NavLink >
+      <SearchToggle />
+      <CartToggle cart={cart} />
     </nav>
   );
 }
@@ -135,11 +130,11 @@ function SearchToggle() {
   return <a href="#search-aside">Search</a>;
 }
 
-function CartBadge({count}: {count: number}) {
-  return <a href="#cart-aside"> <CartIcon width={20} className='inline'/> <span className='inline'>{count}</span></a>;
+function CartBadge({ count }: { count: number }) {
+  return <a href="#cart-aside">Cart {count}</a>;
 }
 
-function CartToggle({cart}: Pick<HeaderProps, 'cart'>) {
+function CartToggle({ cart }: Pick<HeaderProps, 'cart'>) {
   return (
     <Suspense fallback={<CartBadge count={0} />}>
       <Await resolve={cart}>
@@ -202,7 +197,7 @@ function activeLinkStyle({
   isPending: boolean;
 }) {
   return {
-    textDecorationLine: isActive ? 'underline' : undefined,
+    fontWeight: isActive ? 'bold' : undefined,
     color: isPending ? 'grey' : 'black',
   };
 }

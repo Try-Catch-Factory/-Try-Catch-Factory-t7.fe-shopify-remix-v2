@@ -11,7 +11,7 @@
 }
 
 body {
-  font-family: "Assistant", sans-serif;
+  font-family: 'Assistant', sans-serif;
   font-optical-sizing: auto;
   font-weight: 400;
 }
@@ -146,12 +146,16 @@ aside li {
   @media (min-width: 48em) {
     display: none;
   }
+  
 }
 
 .header-menu-mobile {
   display: flex;
   flex-direction: column;
   grid-gap: 1rem;
+  padding-left: 30px;
+  
+
 }
 
 .header-menu-desktop {
@@ -171,6 +175,7 @@ aside li {
 .header-ctas {
   align-items: center;
   display: flex;
+  flex-direction: row;
   grid-gap: 1rem;
   margin-left: auto;
 }
@@ -354,11 +359,61 @@ aside li {
   grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-width), 1fr));
   margin-bottom: 2rem;
 }
-
-.collection-item img {
+/*---------------------*/
+.collection-item {
+  
   height: auto;
 }
+.collection-img {
+  margin: auto;
+  width: 350px;
+  height: 350px;
+  overflow: hidden;
+  
+  position: relative;
+}
 
+.collection-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position:absolute;
+  left:0;
+  top:0;
+  transition: transform 0.3s ease;
+}
+
+.collection-img img:hover {
+  width: 350px;
+  transform: scale(1.2);
+}
+/*---------------------*/
+
+.product-img {
+  
+  
+  margin: auto;
+  width: 300px;
+  height: 300px;
+  overflow: hidden;
+  margin: auto;
+  position:relative;
+}
+
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position:absolute;
+  left:0;
+  top:0;
+  transition: transform 0.3s ease;
+}
+
+.product-img img:hover {
+  width: 300px;
+  transform: scale(1.2);
+}
 /*
 * --------------------------------------------------
 * routes/collections.$handle.tsx
@@ -377,6 +432,7 @@ aside li {
   grid-gap: 1.5rem;
   grid-template-columns: repeat(auto-fit, minmax(var(--grid-item-width), 1fr));
   margin-bottom: 2rem;
+  
 }
 
 .product-item img {
@@ -395,6 +451,10 @@ aside li {
     grid-template-columns: 1fr 1fr;
     grid-gap: 4rem;
   }
+  align-self: center;
+  padding-left: 15px;
+  padding-right: 15px;
+  
 }
 
 .product h1 {
@@ -404,6 +464,8 @@ aside li {
 .product-images {
   display: grid;
   grid-gap: 1rem;
+  
+
 }
 
 .product-image img {
@@ -481,14 +543,29 @@ aside li {
   display: inline-block;
 }
 
-.blogLink{
+.blogLink {
   margin-left: 10px;
 }
-.blog-article{
+.blog-article {
   max-width: 400px;
   margin: 100px;
 }
-.article{
+.article {
   max-width: 100%;
   margin: 100px;
+}
+
+/*---- hiden menu ------*/
+#myMenu {
+  display: flex;
+  flex-direction: row;
+  padding: 20px;
+  text-align: center;
+}
+
+@media (max-width: 760px) {
+  #myMenu {
+      display: none;
+
+  }
 }
