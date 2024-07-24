@@ -16,10 +16,6 @@ body {
   font-weight: 400;
 }
 
-img {
-  border-radius: 4px;
-}
-
 /*
 * --------------------------------------------------
 * components/Aside
@@ -346,9 +342,6 @@ aside li {
   }
 }
 
-.recommended-product img {
-  height: auto;
-}
 
 /*
 * --------------------------------------------------
