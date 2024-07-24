@@ -76,7 +76,11 @@ function RecommendedProducts({
                     className="recommended-product"
                     to={`/products/${product.handle}`}
                   >
-                    <Product data={product}/>
+                    <Product
+                      data={product}
+                      title={product.title}
+                      imageData={product.images.nodes[0]}
+                      priceRange={product.priceRange}/>
                   </Link>
                 ))}
               </div>
