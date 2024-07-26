@@ -569,3 +569,57 @@ aside li {
 
   }
 }
+
+.black-button{
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.black-button:hover {
+  transform: scale(1.05);
+}
+
+/* --------------- */
+.acccount-orders{
+  
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  align-items: center;
+  margin-bottom: 50px;
+  margin-top: 0px;
+  height: 100px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+
+.container-orders-item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  border: 1px solid #000;
+  margin: 1px;
+  padding-top: 2px;
+  padding-bottom: 5px;
+  width: 80%;
+}
+
+.orders-cell{
+  
+  width: 35%;
+  margin-left: 15px;
+  margin-top: 5;
+  margin-bottom: 5;
+  color:#6e6868;
+  font-size: 12px;
+  
+
+}
+
