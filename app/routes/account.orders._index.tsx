@@ -50,8 +50,8 @@ export default function Orders() {
   const { customer } = useLoaderData<{ customer: CustomerOrdersFragment }>();
   const { orders, numberOfOrders } = customer;
   return (
-    <div className="orders">
-      <h2>
+    <div className="orders ">
+      <h2 className='font-extra pl-5' >
         Orders <small>({numberOfOrders})</small>
       </h2>
       <br />
@@ -62,37 +62,48 @@ export default function Orders() {
 
 function OrdersTable({ orders }: Pick<CustomerOrdersFragment, 'orders'>) {
   return (
-    <div className="acccount-orders ">
-      <div className='container-orders-item'>
-        <div className="orders-cell">Order</div>
-        <div className="orders-cell">Date</div>
-        <div className="orders-cell">Payment status</div>
-        <div className="orders-cell">Fulfillment status</div>
-        <div className="orders-cell">Total</div>
-        <div className="orders-cell">View Order</div>
+    <div className="container-table-orders">
+      <div className='orders-table overflow-x-auto'>
+        <table className="responsive-table min-w-full bg-white">
+          <thead className="">
+            <tr>
+              <th className="py-2 px-4 border font-extra">Order</th>
+              <th className="py-2 px-4 border font-extra">Date</th>
+              <th className="py-2 px-4 border font-extra">Payment status</th>
+              <th className="py-2 px-4 border font-extra">Fulfillment status</th>
+              <th className="py-2 px-4 border font-extra">Total</th>
+              <th className="py-2 px-4 border font-extra">View Order</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders?.nodes.length ? (
+              <Pagination connection={orders}>
+                {({ nodes, isLoading, PreviousLink, NextLink }) => {
+                  return (
+                    <>
+                      <PreviousLink className=''>
+                        {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
+                      </PreviousLink>
+                      {nodes.map((order) => {
+                        return <OrderItem key={order.id} order={order} />;
+                      })}
+                      <NextLink>
+                        {isLoading ? 'Loading...' : <span>Load more ↓</span>}
+                      </NextLink>
+                    </>
+                  );
+                }}
+              </Pagination>
+            ) : (
+              <EmptyOrders />
+            )}
+
+          </tbody>
+        </table>
       </div>
-      {orders?.nodes.length ? (
-        <Pagination connection={orders}>
-          {({ nodes, isLoading, PreviousLink, NextLink }) => {
-            return (
-              <>
-                <PreviousLink className=''>
-                  {isLoading ? 'Loading...' : <span>↑ Load previous</span>}
-                </PreviousLink>
-                {nodes.map((order) => {
-                  return <OrderItem key={order.id} order={order} />;
-                })}
-                <NextLink>
-                  {isLoading ? 'Loading...' : <span>Load more ↓</span>}
-                </NextLink>
-              </>
-            );
-          }}
-        </Pagination>
-      ) : (
-        <EmptyOrders />
-      )}
     </div>
+
+
   );
 }
 
@@ -111,37 +122,43 @@ function EmptyOrders() {
 function OrderItem({ order }: { order: OrderItemFragment }) {
   return (
     <>
-      
-      <fieldset className='container-orders-item'>
 
-        <div className="orders-cell">
+      <tr className=''>
+
+        <td className="py-2 px-4 border"
+          data-label="Nombre">
           <Link to={`/account/orders/${order.id}`}>
             <strong>#{order.orderNumber}</strong>
           </Link>
-        </div>
+        </td>
 
-        <div className="orders-cell">
+        <td className="py-2 px-4 border"
+          data-label="Date">
           <p>{new Date(order.processedAt).toDateString()}</p>
-        </div>
+        </td>
 
-        <div className="orders-cell">
+        <td className="py-2 px-4 border"
+          data-label="Payment status">
           <p>{order.financialStatus}</p>
-        </div>
+        </td>
 
-        <div className="orders-cell">
+        <td className="py-2 px-4 border"
+          data-label="Fulfillment status">
           <p>{order.fulfillmentStatus}</p>
-        </div>
+        </td>
 
-        <div className="orders-cell">
+        <td className="py-2 px-4 border"
+          data-label="Total">
           <Money data={order.currentTotalPrice} />
-        </div>
+        </td>
 
-        <div className="orders-cell">
+        <td className="py-2 px-4 border"
+          data-label="View Order">
           <Link to={`/account/orders/${btoa(order.id)}`}>View Order →</Link>
-        </div>
-      
-      </fieldset>
-      
+        </td>
+
+      </tr>
+
     </>
   );
 }
