@@ -1,5 +1,7 @@
 import {Await} from '@remix-run/react';
 import {Suspense} from 'react';
+import { Input } from './Input';
+
 import type {
   CartApiQueryFragment,
   FooterQuery,
@@ -67,8 +69,9 @@ function SearchAside() {
         <PredictiveSearchForm>
           {({fetchResults, inputRef}) => (
             <div>
-              <input
-                name="q"
+              <Input
+                name="q" 
+                label=''
                 onChange={fetchResults}
                 onFocus={fetchResults}
                 placeholder="Search"
@@ -76,7 +79,8 @@ function SearchAside() {
                 type="search"
               />
               &nbsp;
-              <button type="submit">Search</button>
+              <button className='bg-black text-white w-24 mt-3 pt-2 pb-2 pl-3 pr-3'
+               type="submit">Search</button>
             </div>
           )}
         </PredictiveSearchForm>
