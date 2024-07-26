@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap');
+
+@font-face {
+  font-family: "Assistant";
+  src: url("https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap");
+}
 
 :root {
   --aside-width: 400px;
@@ -624,6 +628,17 @@ aside li {
 }
 
 
+.container-table-orders{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.orders-table{
+  width: 70%;
+  
+}
 
 @media screen and (max-width: 800px) {
   .responsive-table thead {
@@ -634,7 +649,7 @@ aside li {
     width: 100%;
   }
   .responsive-table tr {
-    margin-bottom: 15px;
+    margin-bottom: 25px;
   }
   .responsive-table td {
     text-align: right;
@@ -651,22 +666,12 @@ aside li {
     text-align: left;
   }
   .orders-table{
-    width: 100%;
+    width: 95%;
     
   }
 }
 
-.container-table-orders{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  
-  width: 100%;
-}
-.orders-table{
-  width: 70%;
-  
-}
+
 
 
 

@@ -5,7 +5,9 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        extra: ["assistant", "sans-serif"]
+        extra: ["assistant", "sans-serif"],
+        assistant: ["Assistant", "sans-serif"],
+        
       },
 
     },
