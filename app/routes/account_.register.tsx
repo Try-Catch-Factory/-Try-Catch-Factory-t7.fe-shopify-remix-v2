@@ -6,6 +6,8 @@ import {
 } from '@netlify/remix-runtime';
 import {Form, Link, useActionData} from '@remix-run/react';
 import type {CustomerCreateMutation} from 'storefrontapi.generated';
+import Button from '~/components/Button';
+import { Input } from '~/components/Input';
 
 type ActionResponse = {
   error: string | null;
@@ -107,40 +109,38 @@ export default function Register() {
   const data = useActionData<ActionResponse>();
   const error = data?.error || null;
   return (
-    <div className="login">
-      <h1>Register.</h1>
-      <Form method="POST">
-        <fieldset>
-          <label htmlFor="email">Email address</label>
-          <input
+    <div className="login flex flex-col items-center">
+      <h1 className='text-4xl'>Register</h1>
+      <Form method="POST" className='w-[600px] flex flex-col items-center'>
+        <fieldset className='w-[100%] flex flex-col gap-4'>
+          <Input
             id="email"
+            label='Email'
             name="email"
             type="email"
             autoComplete="email"
             required
-            placeholder="Email address"
             aria-label="Email address"
             // eslint-disable-next-line jsx-a11y/no-autofocus
             autoFocus
           />
-          <label htmlFor="password">Password</label>
-          <input
+          <Input
             id="password"
             name="password"
+            label='Password'
             type="password"
             autoComplete="current-password"
-            placeholder="Password"
             aria-label="Password"
             minLength={8}
             required
           />
-          <label htmlFor="passwordConfirm">Re-enter password</label>
-          <input
+          
+          <Input
             id="passwordConfirm"
             name="passwordConfirm"
+            label='Re-enter password'
             type="password"
             autoComplete="current-password"
-            placeholder="Re-enter password"
             aria-label="Re-enter password"
             minLength={8}
             required
@@ -155,10 +155,10 @@ export default function Register() {
         ) : (
           <br />
         )}
-        <button type="submit">Register</button>
+        <Button type='submit' style='filled' color='secondary' className="px-8">Register</Button>
       </Form>
       <br />
-      <p>
+      <p className='text-sm mt-2 underline'>
         <Link to="/account/login">Login →</Link>
       </p>
     </div>

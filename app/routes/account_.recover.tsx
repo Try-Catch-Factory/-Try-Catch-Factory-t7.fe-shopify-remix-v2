@@ -5,6 +5,8 @@ import {
   type ActionFunctionArgs,
 } from '@netlify/remix-runtime';
 import {Form, Link, useActionData} from '@remix-run/react';
+import Button from '~/components/Button';
+import { Input } from '~/components/Input';
 
 type ActionResponse = {
   error?: string;
@@ -51,8 +53,8 @@ export default function Recover() {
   const action = useActionData<ActionResponse>();
 
   return (
-    <div className="account-recover">
-      <div>
+    <div className="account-recover flex flex-col items-center p-4">
+      <div className='flex flex-col items-center'>
         {action?.resetRequested ? (
           <>
             <h1>Request Sent.</h1>
@@ -66,23 +68,21 @@ export default function Recover() {
           </>
         ) : (
           <>
-            <h1>Forgot Password.</h1>
+            <h1 className='text-4xl'> Reset your password </h1>
             <p>
-              Enter the email address associated with your account to receive a
-              link to reset your password.
+              We will send you an email to reset your password 
             </p>
             <br />
-            <Form method="POST">
-              <fieldset>
-                <label htmlFor="email">Email</label>
-                <input
+            <Form method="POST" className='max-md:w-[90%] w-[600px] flex flex-col items-center'>
+              <fieldset className='w-[100%] flex flex-col gap-4'>
+                <Input
                   aria-label="Email address"
                   autoComplete="email"
                   // eslint-disable-next-line jsx-a11y/no-autofocus
                   autoFocus
                   id="email"
                   name="email"
-                  placeholder="Email address"
+                  label="Email"
                   required
                   type="email"
                 />
@@ -96,11 +96,11 @@ export default function Recover() {
               ) : (
                 <br />
               )}
-              <button type="submit">Request Reset Link</button>
+              <Button type='submit' style='filled' color='secondary' className="px-8">Request Reset Link</Button>
             </Form>
             <div>
               <br />
-              <p>
+              <p className='text-sm mt-2 underline'>
                 <Link to="/account/login">Login →</Link>
               </p>
             </div>
