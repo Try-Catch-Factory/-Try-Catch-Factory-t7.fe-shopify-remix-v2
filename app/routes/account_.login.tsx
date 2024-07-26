@@ -5,6 +5,8 @@ import {
   type LoaderFunctionArgs,
 } from '@netlify/remix-runtime';
 import {Form, Link, useActionData, type MetaFunction} from '@remix-run/react';
+import Button from '~/components/Button';
+import { Input } from '~/components/Input';
 
 type ActionResponse = {
   error: string | null;
@@ -72,54 +74,49 @@ export default function Login() {
   const error = data?.error || null;
 
   return (
-    <div className="login">
-      <h1>Sign in.</h1>
-      <Form method="POST">
-        <fieldset>
-          <label htmlFor="email">Email address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            placeholder="Email address"
-            aria-label="Email address"
-            // eslint-disable-next-line jsx-a11y/no-autofocus
-            autoFocus
-          />
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            name="password"
-            type="password"
-            autoComplete="current-password"
-            placeholder="Password"
-            aria-label="Password"
-            minLength={8}
-            required
-          />
+    <div className="login flex flex-col items-center">
+      <h1 className='text-4xl'>Login</h1>
+      <Form method="POST" className='w-[600px] flex flex-col items-center'>
+        <fieldset className='w-[100%] flex flex-col gap-4'>
+          <Input
+          id="email"
+          name="email"
+          label='Email'
+          type="email"
+          autoComplete="email"
+          required
+          // eslint-disable-next-line jsx-a11y/no-autofocus
+          autoFocus/>
+
+          <Input
+          id="password"
+          name="password"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          aria-label="Password"
+          minLength={8}
+          required/>
+          <p className='text-sm underline'>
+            <Link to="/account/recover">Forgot your password? </Link>
+          </p>
         </fieldset>
         {error ? (
           <p>
-            <mark>
+            <mark className='rounded-sm'>
               <small>{error}</small>
             </mark>
           </p>
         ) : (
           <br />
         )}
-        <button type="submit">Sign in</button>
+        <Button type='submit' style='filled' color='secondary' className="px-8">
+          <span>Sign in</span>
+        </Button>
+        <p className='text-sm mt-2 underline'>
+          <Link to="/account/register">Create Account →</Link>
+        </p>
       </Form>
-      <br />
-      <div>
-        <p>
-          <Link to="/account/recover">Forgot password →</Link>
-        </p>
-        <p>
-          <Link to="/account/register">Register →</Link>
-        </p>
-      </div>
     </div>
   );
 }

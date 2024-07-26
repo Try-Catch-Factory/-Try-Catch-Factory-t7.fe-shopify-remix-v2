@@ -1,26 +1,25 @@
 import classNames from "classnames";
+import { ButtonHTMLAttributes, InputHTMLAttributes } from "react";
 
-type ButtonProps = {
-    children: React.ReactNode
+interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     style: "outline" | "filled"
-    color: "primary" | "secondary",
+    color: "primary" | "secondary"
     [x: string]: any
 }
 
-function Button({children, style, color, ...props}: ButtonProps) {
+function Button({style, color, className, ...props}: ButtonProps) {
 
     const backgroundColor = color == "secondary" ? "bg-black text-white": "bg-none" 
 
     const buttonStyles = classNames({
-        ["min-h-[3rem]"]: true,
+        ["min-h-[3rem] hover:scale-[1.02]"]: true,
         ["border border-white bg-none text-white"]: style == "outline",
-        [`border border-white ${backgroundColor} text-black`]: style == "filled", 
-        [`${props.className}`]: true
-    });
+        [`border border-white ${backgroundColor} text-black`]: style == "filled",
+    }, className);
     
     return (
-        <button className={buttonStyles}>
-            {children}
+        <button className={buttonStyles} {...props}>
+            {props.children}
         </button>  
     );
 }
