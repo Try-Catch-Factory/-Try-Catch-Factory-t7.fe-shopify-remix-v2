@@ -127,10 +127,9 @@ export default function AccountProfile() {
             <Input className='mb-4'
               id="firstName"
               name="firstName" 
-              label="FirstName"
+              label="Firstname"
               type="text"
               autoComplete="given-name"
-              placeholder="First name"
               aria-label="First name"
               defaultValue={customer.firstName ?? ''}
               minLength={2}
@@ -139,10 +138,9 @@ export default function AccountProfile() {
             <Input className='mb-4'
               id="lastName"
               name="lastName" 
-              label="Last Name"
+              label="Lastname"
               type="text"
               autoComplete="family-name"
-              placeholder="Last name"
               aria-label="Last name"
               defaultValue={customer.lastName ?? ''}
               minLength={2}
@@ -154,7 +152,6 @@ export default function AccountProfile() {
               label="Phone" 
               type="tel"
               autoComplete="tel"
-              placeholder="Mobile"
               aria-label="Mobile"
               defaultValue={customer.phone ?? ''}
             />
@@ -162,11 +159,10 @@ export default function AccountProfile() {
             <Input className='mb-4'
               id="email"
               name="email"
-              label="email" 
+              label="Email" 
               type="email"
               autoComplete="email"
               required
-              placeholder="Email address"
               aria-label="Email address"
               defaultValue={customer.email ?? ''}
             />
@@ -194,7 +190,6 @@ export default function AccountProfile() {
               label="Current password" 
               type="password"
               autoComplete="current-password"
-              placeholder="Current password"
               aria-label="Current password"
               minLength={8}
             />
@@ -204,7 +199,6 @@ export default function AccountProfile() {
               name="newPassword"
               label="New password"
               type="password"
-              placeholder="New password"
               aria-label="New password"
               minLength={8}
             />
@@ -212,9 +206,8 @@ export default function AccountProfile() {
             <Input
               id="newPasswordConfirm"
               name="newPasswordConfirm"
-              label="New password confirm" 
+              label="New password (confirm)" 
               type="password"
-              placeholder="New password (confirm)"
               aria-label="New password confirm"
               minLength={8}
             />
@@ -229,7 +222,7 @@ export default function AccountProfile() {
           ) : (
             <br />
           )}
-          <button className='black-button'
+          <button className='black-button block m-auto'
             type="submit" disabled={state !== 'idle'}>
             {state !== 'idle' ? 'Updating' : 'Update'}
           </button>

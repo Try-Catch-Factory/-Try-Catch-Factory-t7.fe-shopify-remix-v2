@@ -71,10 +71,9 @@ function SearchAside() {
             <div>
               <Input
                 name="q" 
-                label=''
+                label='Search'
                 onChange={fetchResults}
                 onFocus={fetchResults}
-                placeholder="Search"
                 ref={inputRef}
                 type="search"
               />
