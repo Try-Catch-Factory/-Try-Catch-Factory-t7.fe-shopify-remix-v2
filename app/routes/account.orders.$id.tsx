@@ -57,14 +57,15 @@ export default function OrderRoute() {
       <h2>Order {order.name}</h2>
       <p>Placed on {new Date(order.processedAt!).toDateString()}</p>
       <br />
-      <div>
-        <table>
+      <div className='flex flex-col flex-wrap items-center '>
+        <div className=' w-4/6 flex flex-row flex-wrap  '>
+        <table className='responsive-table '>
           <thead>
             <tr>
-              <th scope="col">Product</th>
-              <th scope="col">Price</th>
-              <th scope="col">Quantity</th>
-              <th scope="col">Total</th>
+              <th className="py-2 px-4 border font-assistant" scope="col">Product</th>
+              <th className="py-2 px-4 border font-assistant" scope="col">Price</th>
+              <th className="py-2 px-4 border font-assistant" scope="col">Quantity</th>
+              <th className="py-2 px-4 border font-assistant" scope="col">Total</th>
             </tr>
           </thead>
           <tbody>
@@ -73,16 +74,18 @@ export default function OrderRoute() {
               <OrderLineRow key={lineItemIndex} lineItem={lineItem} />
             ))}
           </tbody>
-          <tfoot>
+          <tfoot className='border bg-slate-100 '>
             {((discountValue && discountValue.amount) ||
               discountPercentage) && (
               <tr>
-                <th scope="row" colSpan={3}>
+                <th  scope="row" colSpan={0}>
                   <p>Discounts</p>
                 </th>
+
                 <th scope="row">
-                  <p>Discounts</p>
+                  <p className='font-light'>Discounts</p>
                 </th>
+                
                 <td>
                   {discountPercentage ? (
                     <span>-{discountPercentage}% OFF</span>
@@ -93,33 +96,33 @@ export default function OrderRoute() {
               </tr>
             )}
             <tr>
-              <th scope="row" colSpan={3}>
-                <p>Subtotal</p>
+              <th scope="row" colSpan={0}>
+                <p >Subtotal</p>
               </th>
               <th scope="row">
-                <p>Subtotal</p>
+                <p className='font-light'>Subtotal</p>
               </th>
               <td>
                 <Money data={order.subtotalPriceV2!} />
               </td>
             </tr>
             <tr>
-              <th scope="row" colSpan={3}>
+              <th scope="row" colSpan={0}>
                 Tax
               </th>
               <th scope="row">
-                <p>Tax</p>
+                <p className='font-light'>Tax</p>
               </th>
               <td>
                 <Money data={order.totalTaxV2!} />
               </td>
             </tr>
             <tr>
-              <th scope="row" colSpan={3}>
+              <th scope="row" >
                 Total
               </th>
               <th scope="row">
-                <p>Total</p>
+                <p className='font-light'>Total</p>
               </th>
               <td>
                 <Money data={order.totalPriceV2!} />
@@ -127,11 +130,12 @@ export default function OrderRoute() {
             </tr>
           </tfoot>
         </table>
-        <div>
-          <h3>Shipping Address</h3>
+
+        <div className=' ml-3 '>
+          <h3 className='font-bold font-assistant'>Shipping Address</h3>
           {order?.shippingAddress ? (
             <address>
-              <p>
+              <p className='font-assistant'>
                 {order.shippingAddress.firstName &&
                   order.shippingAddress.firstName + ' '}
                 {order.shippingAddress.lastName}
@@ -145,14 +149,16 @@ export default function OrderRoute() {
               )}
             </address>
           ) : (
-            <p>No shipping address defined</p>
+            <p className="font-extra">No shipping address defined</p>
           )}
-          <h3>Status</h3>
+          <h3 className='font-bold'>Status</h3>
           <div>
             <p>{order.fulfillmentStatus}</p>
           </div>
         </div>
       </div>
+        </div>
+        
       <br />
       <p>
         <a target="_blank" href={order.statusUrl} rel="noreferrer">
@@ -166,26 +172,27 @@ export default function OrderRoute() {
 function OrderLineRow({lineItem}: {lineItem: OrderLineItemFullFragment}) {
   return (
     <tr key={lineItem.variant!.id}>
-      <td>
-        <div>
+      <td className='py-2 px-4 border' data-label="Product">
+        <div className='flex flex-row p-0'>
           <Link to={`/products/${lineItem.variant!.product!.handle}`}>
             {lineItem?.variant?.image && (
-              <div>
-                <Image data={lineItem.variant.image} width={96} height={96} />
+              <div >
+                <Image 
+                 data={lineItem.variant.image} width={70} height={70} />
               </div>
             )}
           </Link>
-          <div>
+          <div className='pl-3'>
             <p>{lineItem.title}</p>
             <small>{lineItem.variant!.title}</small>
           </div>
         </div>
       </td>
-      <td>
+      <td className='py-2 px-4 border' data-label="Price">
         <Money data={lineItem.variant!.price!} />
       </td>
-      <td>{lineItem.quantity}</td>
-      <td>
+      <td className='py-2 px-4 border' data-label="Quantity">{lineItem.quantity}</td>
+      <td className='py-2 px-4 border' data-label="Total">
         <Money data={lineItem.discountedTotalPrice!} />
       </td>
     </tr>

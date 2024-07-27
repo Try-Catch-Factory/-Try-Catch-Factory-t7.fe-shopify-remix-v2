@@ -26,7 +26,7 @@ export function Aside({
           window.location.hash = '';
         }}
       />
-      <aside>
+      <aside className="max-md:max-w-[100%] max-md:min-w-[100%]">
         <header>
           <h3>{heading}</h3>
           <CloseAside />

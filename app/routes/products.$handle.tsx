@@ -140,7 +140,7 @@ function ProductImage({image}: {image: ProductVariantFragment['image']}) {
         aspectRatio="1/1"
         data={image}
         key={image.id}
-        sizes="(min-width: 45em) 50vw, 100vw"
+        className='object-scale-down min-w-[45em] max-lg:min-w-[100%] max-lg:object-fill'
       />
     </div>
   );
@@ -157,7 +157,7 @@ function ProductMain({
 }) {
   const {title, descriptionHtml} = product;
   return (
-    <div className="product-main">
+    <div className="product-main max-lg:min-w-[100%]">
       <h1>{title}</h1>
       <ProductPrice selectedVariant={selectedVariant} />
       <br />
@@ -242,7 +242,9 @@ function ProductForm({
       <AddToCartButton
         disabled={!selectedVariant || !selectedVariant.availableForSale}
         onClick={() => {
-          window.location.href = window.location.href + '#cart-aside';
+          const url = new URL(window.location.href);
+          url.hash="cart-aside"
+          window.location.href = url.toString();
         }}
         lines={
           selectedVariant
@@ -255,7 +257,7 @@ function ProductForm({
             : []
         }
       >
-        <Button style='filled' color='secondary' className="w-[400px]">
+        <Button style='filled' color='secondary' className="w-[400px] max-md:w-[90vw]">
           {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
         </Button>
         
