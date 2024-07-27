@@ -50,7 +50,7 @@ export function Product({
                     className={imageStyles}
                     crop="center"
                     />
-            <h4 className="text-[0.8rem]">{props.title}</h4>
+            <h4 className="text-md">{props.title}</h4>
             <small>
                 <Money data={props.priceRange.minVariantPrice} />
             </small>
