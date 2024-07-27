@@ -3,6 +3,8 @@ import type {CartLineUpdateInput} from '@shopify/hydrogen/storefront-api-types';
 import {Link} from '@remix-run/react';
 import type {CartApiQueryFragment} from 'storefrontapi.generated';
 import {useVariantUrl} from '~/utils';
+import Button from './Button';
+import { Input } from './Input';
 
 type CartLine = CartApiQueryFragment['lines']['nodes'][0];
 
@@ -16,7 +18,7 @@ export function CartMain({layout, cart}: CartMainProps) {
   const withDiscount =
     cart &&
     Boolean(cart.discountCodes.filter((code) => code.applicable).length);
-  const className = `cart-main ${withDiscount ? 'with-discount' : ''}`;
+  const className = `cart-main ${withDiscount ? 'with-discount' : ''} pb-[4rem]`;
 
   return (
     <div className={className}>
@@ -121,9 +123,11 @@ function CartCheckoutActions({checkoutUrl}: {checkoutUrl: string}) {
   if (!checkoutUrl) return null;
 
   return (
-    <div>
+    <div className="my-5">
       <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+        <Button style='filled' color='secondary' className="px-2">
+          <p>Continue to Checkout &rarr;</p>
+        </Button>
       </a>
       <br />
     </div>
@@ -145,9 +149,9 @@ export function CartSummary({
   return (
     <div aria-labelledby="cart-summary" className={className}>
       <h4>Totals</h4>
-      <dl className="cart-subtotal">
-        <dt>Subtotal</dt>
-        <dd>
+      <dl className="cart-subtotal text-2xl">
+        <dt><b> Subtotal: </b></dt>
+        <dd className='p-2'>
           {cost?.subtotalAmount?.amount ? (
             <Money data={cost?.subtotalAmount} />
           ) : (
@@ -167,7 +171,9 @@ function CartLineRemoveButton({lineIds}: {lineIds: string[]}) {
       action={CartForm.ACTIONS.LinesRemove}
       inputs={{lineIds}}
     >
-      <button type="submit">Remove</button>
+      <button type="submit" className="bg-gray-100  hover:bg-gray-200 border border-gray-300 p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+       Remove
+      </button>
     </CartForm>
   );
 }
@@ -180,29 +186,46 @@ function CartLineQuantity({line}: {line: CartLine}) {
 
   return (
     <div className="cart-line-quantiy">
-      <small>Quantity: {quantity} &nbsp;&nbsp;</small>
+      <div className="relative flex items-center max-w-[11rem]">
       <CartLineUpdateButton lines={[{id: lineId, quantity: prevQuantity}]}>
         <button
-          aria-label="Decrease quantity"
-          disabled={quantity <= 1}
-          name="decrease-quantity"
-          value={prevQuantity}
-        >
-          <span>&#8722; </span>
+        aria-label="Decrease quantity"
+        disabled={quantity <= 1}
+        name="decrease-quantity"
+        value={prevQuantity}
+        data-input-counter-decrement="bedrooms-input"
+        className="bg-gray-100  hover:bg-gray-200 border border-gray-300 p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+            <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 2">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h16"/>
+            </svg>
         </button>
       </CartLineUpdateButton>
-      &nbsp;
-      <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
-        <button
+        
+        <input type="text" id="bedrooms-input" data-input-counter data-input-counter-min="1" data-input-counter-max="5" aria-describedby="helper-text-explanation" className="bg-gray-50 border-x-0 border-gray-300 h-11 font-medium text-center text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full pb-6" placeholder={quantity.toString()} value={quantity} required />
+        <div className="absolute bottom-1 start-1/2 -translate-x-1/2 rtl:translate-x-1/2 flex items-center text-xs text-gray-400 space-x-1 rtl:space-x-reverse">
+            <svg className="w-2.5 h-2.5 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8v10a1 1 0 0 0 1 1h4v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5h4a1 1 0 0 0 1-1V8M1 10l9-9 9 9"/>
+            </svg>
+            <span>Quantity</span>
+        </div>
+
+        <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
+
+          <button
           aria-label="Increase quantity"
           name="increase-quantity"
           value={nextQuantity}
-        >
-          <span>&#43;</span>
+          data-input-counter-decrement="bedrooms-input"
+          id="increment-button"
+          className="bg-gray-100  hover:bg-gray-200 border border-gray-300 p-3 h-11 focus:ring-gray-100 focus:ring-2 focus:outline-none">
+            <svg className="w-3 h-3 text-gray-900" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+            </svg>
         </button>
       </CartLineUpdateButton>
-      &nbsp;
-      <CartLineRemoveButton lineIds={[lineId]} />
+        
+    </div>
+    <CartLineRemoveButton lineIds={[lineId]} />
     </div>
   );
 }
@@ -242,7 +265,7 @@ export function CartEmpty({
   layout?: CartMainProps['layout'];
 }) {
   return (
-    <div hidden={hidden}>
+    <div hidden={hidden} >
       <br />
       <p>
         Looks like you haven&rsquo;t added anything yet, let&rsquo;s get you
@@ -257,7 +280,9 @@ export function CartEmpty({
           }
         }}
       >
-        Continue shopping →
+        <Button color="secondary" style='filled' className='px-4'>
+           <p>Continue Shopping</p>
+        </Button>
       </Link>
     </div>
   );
@@ -291,10 +316,10 @@ function CartDiscounts({
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div>
-          <input type="text" name="discountCode" placeholder="Discount code" />
+        <div className='flex flex-row'>
+          <Input label='Discount code' type="text" name="discountCode" className='w-[100%]'/>
           &nbsp;
-          <button type="submit">Apply</button>
+          <Button style="filled" color="secondary" type="submit" className='px-4'>Apply</Button>
         </div>
       </UpdateDiscountForm>
     </div>
