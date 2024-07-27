@@ -307,7 +307,7 @@ export function PredictiveSearchResults() {
   }
   return (
     <div className="predictive-search-results">
-      <div>
+      <div className=''>
         {results.map(({type, items}) => (
           <PredictiveSearchResult
             goToSearchResult={goToSearchResult}
@@ -367,7 +367,7 @@ function PredictiveSearchResult({
   return (
     <div className="predictive-search-result" key={type}>
       <Link prefetch="intent" to={categoryUrl} onClick={goToSearchResult}>
-        <h5>{isSuggestions ? 'Suggestions' : type}</h5>
+        <h5 className='font-assistant'>{isSuggestions ? 'Suggestions' : type}</h5>
       </Link>
       <ul>
         {items.map((item: NormalizedPredictiveSearchResultItem) => (

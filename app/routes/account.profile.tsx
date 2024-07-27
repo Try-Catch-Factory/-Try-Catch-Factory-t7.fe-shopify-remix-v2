@@ -1,5 +1,7 @@
-import type {CustomerFragment} from 'storefrontapi.generated';
-import type {CustomerUpdateInput} from '@shopify/hydrogen/storefront-api-types';
+import type { CustomerFragment } from 'storefrontapi.generated';
+import type { CustomerUpdateInput } from '@shopify/hydrogen/storefront-api-types';
+import { Input } from '~/components/Input';
+import { Button } from '~/components/Button';
 import {
   json,
   redirect,
@@ -20,10 +22,10 @@ export type ActionResponse = {
 };
 
 export const meta: MetaFunction = () => {
-  return [{title: 'Profile'}];
+  return [{ title: 'Profile' }];
 };
 
-export async function loader({context}: LoaderFunctionArgs) {
+export async function loader({ context }: LoaderFunctionArgs) {
   const customerAccessToken = await context.session.get('customerAccessToken');
   if (!customerAccessToken) {
     return redirect('/account/login');
@@ -31,17 +33,17 @@ export async function loader({context}: LoaderFunctionArgs) {
   return json({});
 }
 
-export async function action({request, context}: ActionFunctionArgs) {
-  const {session, storefront} = context;
+export async function action({ request, context }: ActionFunctionArgs) {
+  const { session, storefront } = context;
 
   if (request.method !== 'PUT') {
-    return json({error: 'Method not allowed'}, {status: 405});
+    return json({ error: 'Method not allowed' }, { status: 405 });
   }
 
   const form = await request.formData();
   const customerAccessToken = await session.get('customerAccessToken');
   if (!customerAccessToken) {
-    return json({error: 'Unauthorized'}, {status: 401});
+    return json({ error: 'Unauthorized' }, { status: 401 });
   }
 
   try {
@@ -81,8 +83,8 @@ export async function action({request, context}: ActionFunctionArgs) {
     // check for mutation errors
     if (updated.customerUpdate?.customerUserErrors?.length) {
       return json(
-        {error: updated.customerUpdate?.customerUserErrors[0]},
-        {status: 400},
+        { error: updated.customerUpdate?.customerUserErrors[0] },
+        { status: 400 },
       );
     }
 
@@ -95,7 +97,7 @@ export async function action({request, context}: ActionFunctionArgs) {
     }
 
     return json(
-      {error: null, customer: updated.customerUpdate?.customer},
+      { error: null, customer: updated.customerUpdate?.customer },
       {
         headers: {
           'Set-Cookie': await session.commit(),
@@ -103,128 +105,130 @@ export async function action({request, context}: ActionFunctionArgs) {
       },
     );
   } catch (error: any) {
-    return json({error: error.message, customer: null}, {status: 400});
+    return json({ error: error.message, customer: null }, { status: 400 });
   }
 }
 
 export default function AccountProfile() {
-  const account = useOutletContext<{customer: CustomerFragment}>();
-  const {state} = useNavigation();
+  const account = useOutletContext<{ customer: CustomerFragment }>();
+  const { state } = useNavigation();
   const action = useActionData<ActionResponse>();
   const customer = action?.customer ?? account?.customer;
 
   return (
-    <div className="account-profile">
-      <h2>My profile</h2>
-      <br />
-      <Form method="PUT">
-        <legend>Personal information</legend>
-        <fieldset>
-          <label htmlFor="firstName">First name</label>
-          <input
-            id="firstName"
-            name="firstName"
-            type="text"
-            autoComplete="given-name"
-            placeholder="First name"
-            aria-label="First name"
-            defaultValue={customer.firstName ?? ''}
-            minLength={2}
-          />
-          <label htmlFor="lastName">Last name</label>
-          <input
-            id="lastName"
-            name="lastName"
-            type="text"
-            autoComplete="family-name"
-            placeholder="Last name"
-            aria-label="Last name"
-            defaultValue={customer.lastName ?? ''}
-            minLength={2}
-          />
-          <label htmlFor="phone">Mobile</label>
-          <input
-            id="phone"
-            name="phone"
-            type="tel"
-            autoComplete="tel"
-            placeholder="Mobile"
-            aria-label="Mobile"
-            defaultValue={customer.phone ?? ''}
-          />
-          <label htmlFor="email">Email address</label>
-          <input
-            id="email"
-            name="email"
-            type="email"
-            autoComplete="email"
-            required
-            placeholder="Email address"
-            aria-label="Email address"
-            defaultValue={customer.email ?? ''}
-          />
-          <div className="account-profile-marketing">
-            <input
-              id="acceptsMarketing"
-              name="acceptsMarketing"
-              type="checkbox"
-              placeholder="Accept marketing"
-              aria-label="Accept marketing"
-              defaultChecked={customer.acceptsMarketing}
+    <div className="account-profile flex flex-row justify-center w-full ">
+      <div className='w-2/5 mb-5 '>
+        <h2 className='font-extra text-xl'>My profile</h2>
+        <br/>
+        <Form method="PUT">
+          <legend>Personal information</legend>
+          <fieldset>
+            
+            <Input className='mb-4'
+              id="firstName"
+              name="firstName" 
+              label="Firstname"
+              type="text"
+              autoComplete="given-name"
+              aria-label="First name"
+              defaultValue={customer.firstName ?? ''}
+              minLength={2}
             />
-            <label htmlFor="acceptsMarketing">
-              &nbsp; Subscribed to marketing communications
-            </label>
-          </div>
-        </fieldset>
-        <br />
-        <legend>Change password (optional)</legend>
-        <fieldset>
-          <label htmlFor="currentPassword">Current password</label>
-          <input
-            id="currentPassword"
-            name="currentPassword"
-            type="password"
-            autoComplete="current-password"
-            placeholder="Current password"
-            aria-label="Current password"
-            minLength={8}
-          />
-
-          <label htmlFor="newPassword">New password</label>
-          <input
-            id="newPassword"
-            name="newPassword"
-            type="password"
-            placeholder="New password"
-            aria-label="New password"
-            minLength={8}
-          />
-
-          <label htmlFor="newPasswordConfirm">New password (confirm)</label>
-          <input
-            id="newPasswordConfirm"
-            name="newPasswordConfirm"
-            type="password"
-            placeholder="New password (confirm)"
-            aria-label="New password confirm"
-            minLength={8}
-          />
-          <small>Passwords must be at least 8 characters.</small>
-        </fieldset>
-        {action?.error ? (
-          <p>
-            <mark>
-              <small>{action.error}</small>
-            </mark>
-          </p>
-        ) : (
+            
+            <Input className='mb-4'
+              id="lastName"
+              name="lastName" 
+              label="Lastname"
+              type="text"
+              autoComplete="family-name"
+              aria-label="Last name"
+              defaultValue={customer.lastName ?? ''}
+              minLength={2}
+            />
+            
+            <Input className='mb-4'
+              id="phone"
+              name="phone" 
+              label="Phone" 
+              type="tel"
+              autoComplete="tel"
+              aria-label="Mobile"
+              defaultValue={customer.phone ?? ''}
+            />
+            
+            <Input className='mb-4'
+              id="email"
+              name="email"
+              label="Email" 
+              type="email"
+              autoComplete="email"
+              required
+              aria-label="Email address"
+              defaultValue={customer.email ?? ''}
+            />
+            <div className="account-profile-marketing">
+              <input
+                id="acceptsMarketing"
+                name="acceptsMarketing"
+                type="checkbox"
+                placeholder="Accept marketing"
+                aria-label="Accept marketing"
+                defaultChecked={customer.acceptsMarketing}
+              />
+              <label htmlFor="acceptsMarketing">
+                &nbsp; Subscribed to marketing communications
+              </label>
+            </div>
+          </fieldset>
           <br />
-        )}
-        <button type="submit" disabled={state !== 'idle'}>
-          {state !== 'idle' ? 'Updating' : 'Update'}
-        </button>
-      </Form>
+          <legend>Change password (optional)</legend>
+          <fieldset>
+            
+            <Input className='mb-4'
+              id="currentPassword"
+              name="currentPassword" 
+              label="Current password" 
+              type="password"
+              autoComplete="current-password"
+              aria-label="Current password"
+              minLength={8}
+            />
+
+            <Input className='mb-4'
+              id="newPassword"
+              name="newPassword"
+              label="New password"
+              type="password"
+              aria-label="New password"
+              minLength={8}
+            />
+
+            <Input
+              id="newPasswordConfirm"
+              name="newPasswordConfirm"
+              label="New password (confirm)" 
+              type="password"
+              aria-label="New password confirm"
+              minLength={8}
+            />
+            <small>Passwords must be at least 8 characters.</small>
+          </fieldset>
+          {action?.error ? (
+            <p>
+              <mark>
+                <small>{action.error}</small>
+              </mark>
+            </p>
+          ) : (
+            <br />
+          )}
+          <button className='black-button block m-auto'
+            type="submit" disabled={state !== 'idle'}>
+            {state !== 'idle' ? 'Updating' : 'Update'}
+          </button>
+
+        </Form>
+      </div>
     </div>
   );
 }

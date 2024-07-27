@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap');
+
+@font-face {
+  font-family: "Assistant";
+  src: url("https://fonts.googleapis.com/css2?family=Assistant:wght@200..800&display=swap");
+}
 
 :root {
   --aside-width: 400px;
@@ -569,3 +573,105 @@ aside li {
 
   }
 }
+
+.black-button{
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+.black-button:hover {
+  transform: scale(1.05);
+}
+
+/* --------------- */
+.acccount-orders{
+  
+  display: flex;
+  flex-direction: column;
+  padding-top: 30px;
+  align-items: center;
+  margin-bottom: 50px;
+  margin-top: 0px;
+  height: 100px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+
+.container-orders-item{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  border: 1px solid #000;
+  margin: 1px;
+  padding-top: 2px;
+  padding-bottom: 5px;
+  width: 80%;
+}
+
+.orders-cell{
+  
+  width: 35%;
+  margin-left: 15px;
+  margin-top: 5;
+  margin-bottom: 5;
+  color:#6e6868;
+  font-size: 12px;
+  
+
+}
+
+
+.container-table-orders{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.orders-table{
+  width: 70%;
+  
+}
+
+@media screen and (max-width: 800px) {
+  .responsive-table thead {
+    display: none;
+  }
+  .responsive-table, .responsive-table tbody, .responsive-table tr, .responsive-table td {
+    display: block;
+    width: 100%;
+  }
+  .responsive-table tr {
+    margin-bottom: 25px;
+  }
+  .responsive-table td {
+    text-align: right;
+    padding-left: 50%;
+    position: relative;
+  }
+  .responsive-table td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 0;
+    width: 50%;
+    padding-left: 15px;
+    font-weight: bold;
+    text-align: left;
+  }
+  .orders-table{
+    width: 95%;
+    
+  }
+}
+
+
+
+
+
